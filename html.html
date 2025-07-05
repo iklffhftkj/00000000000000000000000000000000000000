@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+  <meta charset="UTF-8">
+  <title>hercules</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: monospace;
+      background: url('your-background.jpg') no-repeat center center fixed;
+      background-size: cover;
+      color: #00ff00;
+    }
+    .header {
+      text-align: center;
+      padding: 20px;
+      background-color: rgba(0, 0, 0, 0.7);
+    }
+    .header img {
+      max-width: 100px;
+    }
+    .container {
+      display: flex;
+      flex-wrap: wrap;
+      padding: 20px;
+      gap: 20px;
+    }
+    .left, .right {
+      flex: 1;
+      min-width: 300px;
+      background-color: rgba(0, 0, 0, 0.75);
+      padding: 20px;
+      border-radius: 10px;
+    }
+    .code-box {
+      height: 300px;
+      background: black;
+      color: lime;
+      overflow-y: auto;
+      padding: 10px;
+      font-size: 14px;
+      border: 1px solid #0f0;
+    }
+    .cmd-box {
+      margin-top: 10px;
+      background: black;
+      padding: 10px;
+      border: 1px solid #0f0;
+    }
+    .cmd-box input {
+      width: 100%;
+      background: black;
+      border: none;
+      color: #0f0;
+      font-size: 16px;
+      outline: none;
+    }
+    select, input, button {
+      width: 100%;
+      margin: 10px 0;
+      padding: 8px;
+      background: #000;
+      color: #0f0;
+      border: 1px solid #0f0;
+    }
+    button {
+      background-color: #0f0;
+      color: #000;
+      font-weight: bold;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+    button:hover {
+      background-color: #00aa00;
+    }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <img src="your-logo.png" alt="logo">
+    <h2>hercules</h2>
+  </div>
+
+  <div class="container">
+    <div class="left">
+      <div class="code-box" id="codeBox"></div>
+      <button onclick="spamIPs()">🔄 توليد IP جديد</button>
+      <div class="cmd-box">
+        <input type="text" placeholder="cmd powershell" onkeydown="handleCommand(event)">
+      </div>
+    </div>
+
+    <div class="right">
+      <select id="platform">
+        <option>Google</option>
+        <option>Facebook</option>
+        <option>Instagram</option>
+        <option>Twitter</option>
+      </select>
+      <input type="text" placeholder="email">
+      <button onclick="simulateHack()">💀 Password</button>
+      <input type="text" id="passwordField" placeholder="🤖">
+    </div>
+  </div>
+
+  <script>
+    const savedPasswords = [
+      "Sara1999!Travel&Life", "Hassan2024@Work&Success", "Laila$SummerDreams1995",
+      "Omar_CoffeeLover2010!", "Nour1988#FamilyFirst", "Karim2023!Sports&Fun",
+      "Fatima$MusicPeace2001", "Ali_ReadingTime1997!", "Youssef#FootballFan2022",
+      "Salma@BestFriend1994", "Zahra1990#MyDreams&Hope", "Walid$CodingHero2025"
+    ];
+
+    function simulateHack() {
+      let passInput = document.getElementById("passwordField");
+      let i = 0;
+      let interval = setInterval(() => {
+        if (i >= 15) {
+          clearInterval(interval);
+          passInput.value = savedPasswords[Math.floor(Math.random() * savedPasswords.length)];
+          return;
+        }
+        passInput.value = Math.random().toString(36).slice(2, 8) + Math.floor(Math.random() * 100);
+        i++;
+      }, 120);
+    }
+
+    function handleCommand(e) {
+      if (e.key === "Enter") {
+        let box = document.getElementById("codeBox");
+        box.innerHTML += `$ ${e.target.value}<br>`;
+        e.target.value = "";
+        box.scrollTop = box.scrollHeight;
+      }
+    }
+
+    const countries = [
+      { flag: "🇲🇦", name: "Morocco" }, { flag: "🇪🇸", name: "Spain" },
+      { flag: "🇫🇷", name: "France" }, { flag: "🇪🇬", name: "Egypt" },
+      { flag: "🇩🇿", name: "Algeria" }, { flag: "🇳🇬", name: "Nigeria" },
+      { flag: "🇬🇧", name: "United Kingdom" }, { flag: "🇩🇪", name: "Germany" },
+      { flag: "🇮🇹", name: "Italy" }, { flag: "🇺🇸", name: "USA" },
+      { flag: "🇹🇳", name: "Tunisia" }
+    ];
+
+    function getRandomIP() {
+      return `${Math.floor(Math.random()*256)}.${Math.floor(Math.random()*256)}.${Math.floor(Math.random()*256)}.${Math.floor(Math.random()*256)}`;
+    }
+
+    function spamIPs() {
+      const box = document.getElementById("codeBox");
+      let spam = "";
+      for (let i = 0; i < 60; i++) {
+        const ip = getRandomIP();
+        const country = countries[Math.floor(Math.random() * countries.length)];
+        spam += `${ip} ${country.flag} ${country.name}<br>`;
+      }
+      box.innerHTML = spam;
+      box.scrollTop = 0;
+    }
+
+    window.onload = spamIPs;
+  </script>
+</body>
+</html>
